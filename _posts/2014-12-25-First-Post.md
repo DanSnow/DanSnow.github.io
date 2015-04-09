@@ -3,6 +3,7 @@ layout: post
 title: "First Post"
 date: 2014-12-25 11:41
 categories: daily site
+tags: daily site
 ---
 想試著用Github Page來寫個blog
 

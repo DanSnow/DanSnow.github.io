@@ -26,6 +26,11 @@
         {% endif %}
       {% endfor %}
 
+      <h3> Tags: </h3>
+      <div id="cloud" class="cloud">
+        {% tag_cloud %}
+      </div>
+
     </nav>
 
     <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
