@@ -1,7 +1,12 @@
 # Dependencies
 future: true
-markdown:         redcarpet
-highlighter:      pygments
+markdown:         kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
+highlighter:      rouge
 gems:
   - jekyll-paginate
 
