@@ -105,7 +105,7 @@ takeLatest 會取消掉前一個 而 takeEvery 則都會執行
 其實還有很多有趣的東西 比如像 fork, cancel 呀之類的 不過那應該會再開一篇了  
 
 ## Reference ##
-[Saga Document]:(http://yelouafi.github.io/redux-saga/index.html)
-[Redux nowadays]:(http://riadbenguella.com/from-actions-creators-to-sagas-redux-upgraded/)
+[Saga Document](http://yelouafi.github.io/redux-saga/index.html)
+[Redux nowadays](http://riadbenguella.com/from-actions-creators-to-sagas-redux-upgraded/)
 
 [mdn-yield-star]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield*
