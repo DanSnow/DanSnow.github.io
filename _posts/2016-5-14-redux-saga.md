@@ -20,7 +20,8 @@ redux-saga 是處理 redux 中遇到的 Side Effects
 
 ## 使用 redux-saga ##
 如果使用 redux-thunk 我們可能會寫出像這樣的 action  
-```javascript
+
+```js
 const fetchTodo = () => (dispatch) => {
   dispatch({ type: 'FETCHING_TODOS' })
   fetch('/todos').then((todos) => {
@@ -28,14 +29,17 @@ const fetchTodo = () => (dispatch) => {
   })
 }
 ```
+
 如果在 redux-saga 裡 可能會寫成像這樣  
-```javascript
+
+```js
 function* fetchTodo() {
   yield put({ type: 'FETCHING_TODOS' }) // Like dispatch({ type: 'FETCHING_TODOS' })
   const todos = yield call(fetch, '/todos')
   yield put({ type: 'FETCHED_TODO', payload: todos }) // Like dispatch({ type: 'FETCHED_TODO' })
 }
 ```
+
 一開始看到了這樣的寫法 這什麼鬼啊 不過接下來就該來解釋下程式碼了
 put, call 這些都是 saga 的 effects put 像是 dispatch  
 而 call 執行傳給它的函式 並把剩下的參數傳給那個函式  
@@ -49,7 +53,8 @@ put, call 這些都是 saga 的 effects put 像是 dispatch
 以上也只是在 saga 下的 action 寫法而已  
 像 thunk 有個 thunk middleware saga 當然也有一個 saga 的 middleware  
 如果不加上去的話 saga 是不會正常執行的
-```javascript
+
+```js
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware()
 // mount it on the Store
@@ -58,11 +63,14 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 )
 ```
+
 這樣就可以掛上 saga middleware  
 如果有一些要在背景執行的 saga 那還可以
-```javascript
+
+```js
 sagaMiddleware.run(rootSaga)
 ```
+
 在設定好 middleware 時就讓它跑起來
 
 ## saga 的 Task ##
@@ -71,11 +79,13 @@ saga 一個比較特別的地方就是可以在背景執行一些操作 比如�
 好像在監聽事件發生一樣 這些叫做 Task  
 比如像剛剛的 action 如果你直接把它傳給 dispatch 那是不行的  
 而是要在建立另一個 saga
-```javascript
+
+```js
 function* rootSaga() {
   yield* takeEvery('FETCH_TODO_REQUEST', fetchTodo);
 }
 ```
+
 然後像上面那個執行背景的 saga 的方法 把這個 saga 執行起來  
 takeEvery 會監聽符合傳給它的名稱的 action  
 並在收到這個 action 時執行由第二個參數傳給它的 saga  
@@ -84,14 +94,17 @@ takeEvery 會監聽符合傳給它的名稱的 action
 ( 當然這不是真的是 macro [MDN for yield*](mdn-yield-star) )
 於是有件重要的事要記得 `yield*` 一定會等到 takeEvery 執行完  
 但是 takeEvery 會一直監聽 action 呀 它根本就不會結束 所以如果有這樣的寫法是不行的  
-```javaScript
+
+```js
 function* rootSaga() {
   yield* takeEvery('ACTION1', action1)
   yield* takeEvery('ACTION2', action2)
 }
 ```
+
 這樣 action2 是不會執行的 必須寫成這樣
-```javaScript
+
+```js
 function* rootSaga() {
   yield [
     takeEvery('ACTION1', action1),
@@ -99,6 +112,7 @@ function* rootSaga() {
   ]
 }
 ```
+
 另外 還有 `takeLatest` 這個 helper 它跟 takeEvery 不同處在於  
 takeLatest 如果在前一個 action 還沒處理完 就收到同樣的 action 時  
 takeLatest 會取消掉前一個 而 takeEvery 則都會執行  
