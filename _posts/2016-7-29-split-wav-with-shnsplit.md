@@ -26,3 +26,6 @@ $ shntool split -f <cue file> -t '%n-%t' -o "cust ext=mp3 lame -h -b 320 - -o %f
 $ cuetag <cue file> *.mp3
 ```
 完成 接下來也可以用 kid3 之類的工具編輯一下 tag 因為有圖形化介面很好操作的  
+
+Reference:  
+[https://wiki.archlinux.org/index.php/CUE_Splitting](https://wiki.archlinux.org/index.php/CUE_Splitting)
