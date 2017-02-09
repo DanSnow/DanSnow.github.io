@@ -1,0 +1,18 @@
+{% comment %}<!--
+List recent_posts
+-->{% endcomment %}
+
+{% for post in site.posts limit: 5 %}
+  {% if post.title != null %}
+    <div class="post">
+      <h1 class="entity-title">
+        <a href="{{ post.url }}">
+          {{ post.title }}
+        </a>
+      </h1>
+      <span class="post-date">{{ post.date | date_to_string }}</span>
+      {{ post.excerpt }}
+      <a href="{{ post.url }}">More...</a>
+    </div>
+  {% endif %}
+{% endfor %}

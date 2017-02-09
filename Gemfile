@@ -1,7 +1,10 @@
-# A sample Gemfile
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem 'github-pages'
-gem 'jekyll-paginate'
-gem 'kramdown'
+gem 'jekyll', '~> 3.1'
+gem 'jekyll-sitemap'
+gem 'jekyll-admin', group: :jekyll_plugins
 gem 'rouge'
+
+group :development do
+  gem 'rake'
+end
