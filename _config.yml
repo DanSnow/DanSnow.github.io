@@ -33,6 +33,9 @@ author :
   github : DanSnow
   twitter : dododavid006
 
+twitter:
+  username: dododavid006
+
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt
 # Most places will/should use BASE_PATH to make the urls
@@ -43,7 +46,10 @@ author :
 #
 production_url : http://dansnow.github.io
 
-gems: ["jekyll-sitemap", "jekyll-admin"]
+gems:
+  - jekyll-sitemap
+  - jekyll-admin
+  - jekyll-seo-tag
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
