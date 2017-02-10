@@ -5,7 +5,7 @@ List recent_posts
 {% for post in site.posts limit: 5 %}
   {% if post.title != null %}
     <div class="post">
-      <h1 class="entity-title">
+      <h1 class="entry-title">
         <a href="{{ post.url }}">
           {{ post.title }}
         </a>
