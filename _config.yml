@@ -4,7 +4,7 @@ permalink: /:categories/:year/:month/:day/:title
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 highlighter: rouge
-excerpt_separator: '<!--more-->'
+excerpt_separator: '<!-- more -->'
 kramdown:
   input:          GFM
   # https://github.com/jekyll/jekyll/pull/4090
@@ -50,6 +50,7 @@ gems:
   - jekyll-sitemap
   - jekyll-admin
   - jekyll-seo-tag
+  - jekyll-relative-links
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
