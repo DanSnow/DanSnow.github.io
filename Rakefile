@@ -3,6 +3,11 @@ require 'rake'
 require 'yaml'
 require 'time'
 
+def alias_task(alias_name, task_name)
+  t = task alias_name => task_name
+  t.comment = Rake::Task[task_name].comment
+end
+
 SOURCE = '.'.freeze
 CONFIG = {
   'version' => '0.3.0',
@@ -100,8 +105,14 @@ end # task :page
 
 desc 'Launch preview environment'
 task :preview do
-  system 'jekyll serve -w'
+  begin
+    system 'jekyll serve --drafts -o'
+  rescue Interrupt
+    puts "Server shutdown"
+  end
 end # task :preview
+
+alias_task :serve, :preview
 
 # Public: Alias - Maintains backwards compatability for theme switching.
 task switch_theme: 'theme:switch'
