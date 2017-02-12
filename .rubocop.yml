@@ -1,0 +1,14 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - '_site/**/*'
+    - '_theme_packages/**/*'
+  TargetRubyVersion: 2.1
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+
+Style/Documentation:
+  Enabled: false
