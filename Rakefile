@@ -54,8 +54,8 @@ task :post do
   title = ENV['title'] || 'new-post'
   tags = ENV['tags'] || '[]'
   category = ENV['category'] || ''
-  category = "\"#{category.tr('-', ' ')}\"" unless category.empty?
-  slug = title.downcase.strip.tr(' ', '-').gsub(/[^\w-]/, '')
+  category = %("#{category.tr('-', ' ')}") unless category.empty?
+  slug = slugify(title)
   begin
     date = env_date.strftime('%Y-%m-%d')
   rescue
@@ -64,19 +64,10 @@ task :post do
   end
   filename = File.join(CONFIG['posts'], "#{date}-#{slug}.#{CONFIG['post_ext']}")
   if File.exist?(filename)
-    abort('rake aborted!') if ask("#{filename} already exists. Do you want to overwrite?", %w(y n)) == 'n'
+    abort('rake aborted!') if ask("#{filename} already exists. Do you want to overwrite?") == 'n'
   end
 
-  puts "Creating new post: #{filename}"
-  open(filename, 'w') do |post|
-    post.puts '---'
-    post.puts 'layout: post'
-    post.puts "title: \"#{title.tr('-', ' ')}\""
-    post.puts 'description: ""'
-    post.puts "category: #{category}"
-    post.puts "tags: #{tags}"
-    post.puts '---'
-  end
+  create_post(filename, title, category, tags)
 end # task :post
 
 # Usage: rake page name="about.html"
@@ -87,20 +78,14 @@ task :page do
   name = ENV['name'] || 'new-page.md'
   filename = File.join(SOURCE, name.to_s)
   filename = File.join(filename, 'index.html') if File.extname(filename) == ''
-  title = File.basename(filename, File.extname(filename)).gsub(/[\W\_]/, ' ').gsub(/\b\w/) { $&.upcase }
+  title = capitalize_words(File.basename(filename, File.extname(filename)).gsub(/[\W\_]/, ' '))
   if File.exist?(filename)
-    abort('rake aborted!') if ask("#{filename} already exists. Do you want to overwrite?", %w(y n)) == 'n'
+    abort('rake aborted!') if ask("#{filename} already exists. Do you want to overwrite?") == 'n'
   end
 
   mkdir_p File.dirname(filename)
-  puts "Creating new page: #{filename}"
-  open(filename, 'w') do |post|
-    post.puts '---'
-    post.puts 'layout: page'
-    post.puts "title: \"#{title}\""
-    post.puts 'description: ""'
-    post.puts '---'
-  end
+
+  create_page(filename, title)
 end # task :page
 
 desc 'Launch preview environment'
@@ -198,7 +183,7 @@ namespace :theme do
     # Mirror each file into the framework making sure to prompt if already exists.
     packaged_theme_files.each do |filename|
       file_install_path = File.join(JB::Path.base, filename)
-      next if File.exist?(file_install_path) && (ask("#{file_install_path} already exists. Do you want to overwrite?", %w(y n)) == 'n')
+      next if File.exist?(file_install_path) && (ask("#{file_install_path} already exists. Do you want to overwrite?") == 'n')
       mkdir_p File.dirname(file_install_path)
       cp_r File.join(packaged_theme_path, filename), file_install_path
     end
@@ -206,11 +191,11 @@ namespace :theme do
     theme = { name: name }
     theme[:git] = ENV['git'] if ENV['git']
 
-    File.write('_theme.yml', YAML.dump(theme))
+    save_theme(theme)
 
     puts "=> #{name} theme has been installed!"
     puts '=> ---'
-    if ask('=> Want to switch themes now?', %w(y n)) == 'y'
+    if ask('=> Want to switch themes now?') == 'y'
       system("rake switch_theme name='#{name}'")
     end
   end
@@ -247,7 +232,6 @@ namespace :theme do
       end
     end
 
-    # Mirror each file into the framework making sure to prompt if already exists.
     packaged_theme_files.each do |filename|
       file_install_path = File.join(JB::Path.base, filename)
       mkdir_p File.dirname(file_install_path)
@@ -318,7 +302,7 @@ def theme_from_git_url(url)
   abort('rake aborted: system call to git clone failed') unless system("git clone #{url} #{tmp_path}")
   manifest = verify_manifest(tmp_path)
   new_path = JB::Path.build(:theme_packages, node: manifest['name'])
-  if File.exist?(new_path) && ask("=> #{new_path} theme package already exists. Override?", %w(y n)) == 'n'
+  if File.exist?(new_path) && ask("=> #{new_path} theme package already exists. Override?") == 'n'
     remove_dir(tmp_path)
     abort("rake aborted: '#{manifest['name']}' already exists as theme package.")
   end
@@ -342,7 +326,9 @@ def verify_manifest(theme_path)
   manifest
 end
 
-def ask(message, valid_options)
+DEFAULT_OPTIONS = %w(y n).freeze
+
+def ask(message, valid_options = DEFAULT_OPTIONS)
   if valid_options
     answer = get_stdin("#{message} #{valid_options.to_s.delete('"').gsub(/, /, '/')} ") until valid_options.include?(answer)
   else
@@ -354,6 +340,45 @@ end
 def get_stdin(message)
   print message
   STDIN.gets.chomp
+end
+
+def capitalize_words(str)
+  str.split.map(&:capitalize).join(' ')
+end
+
+def slugify(str)
+  str.downcase.strip.tr(' ', '-').gsub(/[^\w-]/, '')
+end
+
+def create_post(filename, title, category, tags)
+  puts "Creating new post: #{filename}"
+  open(filename, 'w') do |post|
+    post.puts '---'
+    post.puts 'layout: post'
+    post.puts %(title: "#{title.tr('-', ' ')}")
+    post.puts 'description: ""'
+    post.puts "category: #{category}"
+    post.puts "tags: #{tags}"
+    post.puts '---'
+  end
+end
+
+def create_page(filename, title)
+  puts "Creating new page: #{filename}"
+  open(filename, 'w') do |post|
+    post.puts '---'
+    post.puts 'layout: page'
+    post.puts %(title: "#{title}")
+    post.puts 'description: ""'
+    post.puts '---'
+  end
+end
+
+def save_theme(theme)
+  File.open('_theme.yml', 'w') do |f|
+    f.puts %(# This file is auto gerenated. Please don't edit)
+    f.puts YAML.dump(theme)
+  end
 end
 
 # Load custom rake scripts
