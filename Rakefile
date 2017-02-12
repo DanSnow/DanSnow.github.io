@@ -108,7 +108,7 @@ task :preview do
   begin
     system 'jekyll serve --drafts -o'
   rescue Interrupt
-    puts "Server shutdown"
+    puts 'Server shutdown'
   end
 end # task :preview
 
@@ -132,26 +132,15 @@ namespace :theme do
   task :switch do
     theme_name = ENV['name'].to_s
     theme_path = File.join(CONFIG['themes'], theme_name)
-    settings_file = File.join(theme_path, 'settings.yml')
-    non_layout_files = ['settings.yml']
 
     abort('rake aborted: name cannot be blank') if theme_name.empty?
     abort("rake aborted: '#{theme_path}' directory not found.") unless Dir.exist?(theme_path)
     abort("rake aborted: '#{CONFIG['layouts']}' directory not found.") unless Dir.exist?(CONFIG['layouts'])
 
-    Dir.glob("#{theme_path}/*") do |filename|
-      next if non_layout_files.include?(File.basename(filename).downcase)
-      puts "Generating '#{theme_name}' layout: #{File.basename(filename)}"
-
-      open(File.join(CONFIG['layouts'], File.basename(filename)), 'w') do |page|
-        page.puts '---'
-        page.puts File.read(settings_file) if File.exist?(settings_file)
-        page.puts 'layout: default' unless File.basename(filename, '.html').casecmp('default').zero?
-        page.puts '---'
-        page.puts '{% include JB/setup %}'
-        page.puts "{% include themes/#{theme_name}/#{File.basename(filename)} %}"
-      end
-    end
+    configs = File.read('_config.yml').lines
+    idx = config.index { |line| line =~ /^jb_theme:/ } + 1
+    configs[idx] = "  name: #{theme_name}"
+    File.write('_config.yml', configs.join)
 
     puts '=> Theme successfully switched!'
     puts '=> Reload your web-page to check it out =)'
@@ -214,7 +203,7 @@ namespace :theme do
       cp_r File.join(packaged_theme_path, filename), file_install_path
     end
 
-    theme = {name: name}
+    theme = { name: name }
     theme[:git] = ENV['git'] if ENV['git']
 
     File.write('_theme.yml', YAML.dump(theme))
@@ -228,7 +217,7 @@ namespace :theme do
 
   desc 'Update theme'
   task :update do
-    theme = YAML.load(File.read('_theme.yml'))
+    theme = YAML.safe_load(File.read('_theme.yml'))
     name = theme[:name]
     theme_git_pull(name) if theme[:git]
 
