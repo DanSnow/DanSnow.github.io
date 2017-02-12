@@ -4,4 +4,5 @@ theme :
 layout: default
 ---
 {% include JB/setup %}
-{% include themes/dansnow-theme/page.html %}
+{% assign layout_type = 'page' %}
+{% include JB/include_layout %}

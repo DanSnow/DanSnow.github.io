@@ -3,4 +3,5 @@ theme :
   name : dansnow-theme
 ---
 {% include JB/setup %}
-{% include themes/dansnow-theme/default.html %}
+{% assign layout_type = 'default' %}
+{% include JB/include_layout %}

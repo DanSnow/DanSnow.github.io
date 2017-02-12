@@ -33,6 +33,9 @@ author :
   github : DanSnow
   twitter : dododavid006
 
+jb_theme:
+  name: dansnow-theme
+
 twitter:
   username: dododavid006
 

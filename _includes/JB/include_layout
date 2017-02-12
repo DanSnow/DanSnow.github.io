@@ -1,0 +1,10 @@
+{% if site.jb_theme.name %}
+  {% capture layout_path %}themes/{{ site.jb_theme.name }}/{{layout_type}}.html{% endcapture %}
+{% elsif layout.theme.name %}
+  {% capture layout_path %}themes/{{ layout.theme.name }}/{{layout_type}}.html{% endcapture %}
+{% else %}
+  {% capture layout_path %}themes/{{ page.theme.name }}/{{layout_type}}.html{% endcapture %}
+{% endif %}
+{% assign layout_type = nil %}
+{% include {{ layout_path }} %}
+{% assign layout_path = nil %}
