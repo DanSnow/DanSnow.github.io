@@ -4,13 +4,13 @@ gem 'jekyll', '~> 3.1'
 gem 'rouge'
 
 group :jekyll_plugins do
-  gem 'jekyll-sitemap'
-  gem 'jekyll-seo-tag'
-  gem 'jekyll-relative-links'
   gem 'jekyll-admin'
+  gem 'jekyll-relative-links'
+  gem 'jekyll-seo-tag'
+  gem 'jekyll-sitemap'
 end
 
 group :development do
-  gem 'rake'
   gem 'pry'
+  gem 'rake'
 end
