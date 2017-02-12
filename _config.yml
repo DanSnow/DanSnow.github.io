@@ -48,6 +48,7 @@ twitter:
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
 production_url : https://dansnow.github.io
+url : https://dansnow.github.io
 
 gems:
   - jekyll-admin
