@@ -50,10 +50,11 @@ twitter:
 production_url : https://dansnow.github.io
 
 gems:
-  - jekyll-sitemap
   - jekyll-admin
-  - jekyll-seo-tag
+  - jekyll-feed
   - jekyll-relative-links
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
