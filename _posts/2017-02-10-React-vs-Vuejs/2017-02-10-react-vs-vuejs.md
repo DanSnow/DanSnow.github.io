@@ -7,8 +7,6 @@ tags:
 - react
 - vue
 ---
-{% include JB/setup %}
-
 現在正流行的兩個前端框架，[React](react) 和 [Vue.js](vue)  
 事實上它們的比較網路上也可以找到不少  
 這篇文章會從各個角度比較這兩個框架  
