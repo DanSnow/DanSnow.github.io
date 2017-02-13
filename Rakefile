@@ -202,7 +202,7 @@ namespace :theme do
 
   desc 'Update theme'
   task :update do
-    theme = YAML.safe_load(File.read('_theme.yml'))
+    theme = YAML.safe_load(File.read('_theme.yml'), [Symbol])
     name = theme[:name]
     theme_git_pull(name) if theme[:git]
 
