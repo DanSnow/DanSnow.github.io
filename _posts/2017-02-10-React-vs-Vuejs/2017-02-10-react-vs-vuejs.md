@@ -96,7 +96,7 @@ Vue 則在迴圈上使用了 `v-for="item in items"` 這樣的語法
 Vue 的寫法真的會讓人切身的體會到它是框架  
 因為在寫的東西永遠都像是在寫設定一樣  
 畢竟是回傳一個 Object  
-~~~javascript
+```javascript
 export default {
   name: 'VueRecaptcha',
   props: ['sitekey'],
@@ -104,10 +104,10 @@ export default {
     // ...
   }
 }
-~~~
+```
 
 React 的寫法比較介於框架和函式庫中間  
-~~~javascript
+```javascript
 class MarkdownEditor extends Component {
   render () {
     return (
@@ -119,7 +119,7 @@ class MarkdownEditor extends Component {
     defaultValue: PropTypes.string
   }
 }
-~~~
+```
 
 看哪個看的順眼吧  
 
@@ -130,11 +130,11 @@ Vue 雖然有 two-way 但預設卻是 one-way
 (而且 Vue 的 two-way 其實是像語法糖的東西)  
 或許這說明了 one-way 還是能有效減少問題發生吧  
 順帶一提 js 可以這樣寫  
-~~~javascript
+```javascript
 this.setState({
   [event.target.name]: event.target.value
 })
-~~~
+```
 用 React 時請別傻傻的一個欄位一個欄位的寫 callback  
 
 ## Context ##
