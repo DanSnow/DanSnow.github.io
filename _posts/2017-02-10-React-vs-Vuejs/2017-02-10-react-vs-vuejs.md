@@ -149,6 +149,8 @@ Vue 在這種情況下 Parent 能對 Child 做的事非常有限
 這類以 component 架構做為其 API 的函式庫  
 這目前是我在 Vue 還沒見到過的  
 
+**Update 2017/03/01**: Vue 2.2 版有 Context 了
+
 [react-music]: https://github.com/FormidableLabs/react-music
 [react-collection-helpers]: https://github.com/joshwcomeau/react-collection-helpers
 
