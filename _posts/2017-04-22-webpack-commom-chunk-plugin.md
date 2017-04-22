@@ -14,7 +14,7 @@ webpack 不是只能將檔案打包成單一個檔案
 一來可以減少大小，二來可以讓檔案被 cache 而加快載入速度  
 <!-- more -->
 
-# 多個 entry 間重覆的 module #
+## 多個 entry 間重覆的 module ##
 
 假設 webpack 中設定了多個 entry  
 
@@ -49,7 +49,7 @@ webpack 不是只能將檔案打包成單一個檔案
 <script src="entry1.js"></script>
 ~~~
 
-# 額外的打包第三方套件 #
+## 額外的打包第三方套件 ##
 
 網頁中可能會使用到不少第三方的套件，這些套件其實更新的比較不會那麼頻煩  
 如果把它們額外打包成一份 js 的話，可以額外的 cache 而加速網頁載入速度  
@@ -72,7 +72,7 @@ webpack 不是只能將檔案打包成單一個檔案
 
 這時候需要自行設要額外打包的套件，一樣的需要把 `vendor` 放在 `app` 的前面載入  
 
-# 打包 async chunk 中重覆的部份 #
+## 打包 async chunk 中重覆的部份 ##
 
 `async chunk` 通常是在較大的 SPA 中才會使用的功能  
 這是讓 webpack 把 js 檔拆成多個小部份，只在需要時延遲載入而已  
@@ -97,7 +97,7 @@ webpack 不是只能將檔案打包成單一個檔案
 這會多產生出一個 `async chunk`，不過不用特別去載入它  
 webpack 產生的程式碼會在需要時自動載入的  
 
-# Debug #
+## Debug ##
 
 是的 debug  
 webpack 可以使用 `--json` 這個選項產生打包的詳細資料  
