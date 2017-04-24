@@ -7,7 +7,7 @@ tags: [tool gcc preprocessor nasm]
 ---
 
 C 語言裡的 macro 功能真的不錯用  
-很多常數都是用用 `#define` 做定義的  
+很多常數都是用 `#define` 做定義的  
 但如果今天使用的不是 C 語言卻需要這些常數時  
 除了一個一個複製貼上外，有沒有更好的辦法呢  
 <!-- more -->
