@@ -50,7 +50,7 @@ twitter:
 production_url : https://dansnow.github.io
 url : https://dansnow.github.io
 
-gems:
+plugins:
   - jekyll-admin
   - jekyll-feed
   - jekyll-relative-links
